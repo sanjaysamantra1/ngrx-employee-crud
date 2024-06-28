@@ -4,29 +4,43 @@ import { EMPTY, of } from 'rxjs';
 import { map, exhaustMap, catchError } from 'rxjs/operators';
 import { EmployeeService } from '../services/employee.service';
 import { props } from '@ngrx/store';
+import { addEmployee, deleteEmployee, fetchEmployees } from './employee.actions';
 
 @Injectable()
 export class EmployeeEffects {
 
     loadEmployees$ = createEffect(() => this.actions$.pipe(
-        ofType('[EmployeeList Page] Fetch Employees'),
+        ofType(fetchEmployees),
         exhaustMap(() => this.employeeService.fetchAllEmployees()
             .pipe(
                 map(Employees =>
-                     ({ type: '[Employees API] Employees Loaded Successfully', payload: Employees })
+                    ({ type: '[Employees API] Employees Loaded Successfully', payload: Employees })
                 ),
                 catchError(() => of({ type: '[Employees API] Employees Loaded Error' }))
             ))
     ));
 
     deleteEmployee$ = createEffect(() => this.actions$.pipe(
-        ofType('[Employees API] Delete Employee'),
-        exhaustMap((action:any) => this.employeeService.deleteEmployee(action.id)
+        ofType(deleteEmployee),
+        exhaustMap((action: any) => this.employeeService.deleteEmployee(action.id)
             .pipe(
-                map(Employee =>{
+                map(Employee => {
+                    alert('Employee Deleted Succesfully');
                     return ({ type: '[EmployeeList Page] Fetch Employees' })
                 }),
                 catchError(() => of({ type: '[Employees API] Employee Delete Error' }))
+            ))
+    ));
+
+    addEmployee$ = createEffect(() => this.actions$.pipe(
+        ofType(addEmployee),
+        exhaustMap((action: any) => this.employeeService.addEmployee(action.employee)
+            .pipe(
+                map(Employee => {
+                    alert('Employee Added Succesfully');
+                    return ({ type: '[EmployeeList Page] Fetch Employees' })
+                }),
+                catchError(() => of({ type: '[Employees API] Employee Add Error' }))
             ))
     ));
 

@@ -1,1 +1,11 @@
 <p>employee-add works!</p>
+
+<form #empForm="ngForm" (submit)="submitEmpForm(empForm.value)">
+    <p>Id: <input name="id" ngModel [(ngModel)]='user.id' /></p>
+    <p>First Name: <input name="firstName" ngModel [(ngModel)]='user.firstName' /></p>
+    <p>Last Name: <input name="lastName" ngModel [(ngModel)]='user.lastName'></p>
+    <p>Email: <input name="email" ngModel [(ngModel)]='user.email'></p>
+    <p>Salary: <input name="sal" ngModel [(ngModel)]='user.sal'></p>
+
+    <input type="submit" value="Add">
+</form>

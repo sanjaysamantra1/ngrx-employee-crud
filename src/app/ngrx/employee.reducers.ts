@@ -5,9 +5,7 @@ export const initialState = [];
 
 export const employeesReducer = createReducer(
   initialState,
-  on(fetchEmployees, (state) => state),
-  on(fetchEmployeesSucess, (state, data: any) => {
-    return data.payload;
+  on(fetchEmployeesSucess, (state, action: any) => {
+    return action.payload;
   }),
-  on(fetchEmployeesError, (state) => state)
 );

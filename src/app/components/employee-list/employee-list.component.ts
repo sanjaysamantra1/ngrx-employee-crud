@@ -23,6 +23,9 @@ export class EmployeeListComponent {
   }
 
   deleteEmp(id: string) {
-    this.store.dispatch(deleteEmployee({ id }));
+    const flag = confirm('Are you sure, You want to delete this record?')
+    if (flag) {
+      this.store.dispatch(deleteEmployee({ id }));
+    }
   }
 }
